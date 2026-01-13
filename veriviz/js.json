@@ -1,0 +1,427 @@
+{
+  "design": {
+    "name": "$root",
+    "kind": "Root",
+    "addr": 2380117595040,
+    "members": [
+      {
+        "name": "",
+        "kind": "CompilationUnit",
+        "addr": 2380120278584
+      },
+      {
+        "name": "memory",
+        "kind": "Instance",
+        "addr": 2380120279720,
+        "body": {
+          "name": "memory",
+          "kind": "InstanceBody",
+          "addr": 2380120278880,
+          "members": [
+            {
+              "name": "address",
+              "kind": "Port",
+              "addr": 2380120280672,
+              "type": "logic[7:0]",
+              "direction": "In",
+              "internalSymbol": "2380120279856 address"
+            },
+            {
+              "name": "data_in",
+              "kind": "Port",
+              "addr": 2380120280800,
+              "type": "logic[7:0]",
+              "direction": "In",
+              "internalSymbol": "2380120280024 data_in"
+            },
+            {
+              "name": "data_out",
+              "kind": "Port",
+              "addr": 2380120280928,
+              "type": "reg[7:0]",
+              "direction": "Out",
+              "internalSymbol": "2380120280192 data_out"
+            },
+            {
+              "name": "read_write",
+              "kind": "Port",
+              "addr": 2380120281104,
+              "type": "logic",
+              "direction": "In",
+              "internalSymbol": "2380120280336 read_write"
+            },
+            {
+              "name": "chip_en",
+              "kind": "Port",
+              "addr": 2380120281232,
+              "type": "logic",
+              "direction": "In",
+              "internalSymbol": "2380120280504 chip_en"
+            },
+            {
+              "name": "data_in",
+              "kind": "Net",
+              "addr": 2380120280024,
+              "type": "logic[7:0]",
+              "netType": {
+                "name": "wire",
+                "kind": "NetType",
+                "addr": 2380117592960,
+                "type": "logic"
+              }
+            },
+            {
+              "name": "address",
+              "kind": "Net",
+              "addr": 2380120279856,
+              "type": "logic[7:0]",
+              "netType": {
+                "name": "wire",
+                "kind": "NetType",
+                "addr": 2380117592960,
+                "type": "logic"
+              }
+            },
+            {
+              "name": "data_out",
+              "kind": "Variable",
+              "addr": 2380120280192,
+              "type": "reg[7:0]",
+              "lifetime": "Static"
+            },
+            {
+              "name": "chip_en",
+              "kind": "Net",
+              "addr": 2380120280504,
+              "type": "logic",
+              "netType": {
+                "name": "wire",
+                "kind": "NetType",
+                "addr": 2380117592960,
+                "type": "logic"
+              }
+            },
+            {
+              "name": "read_write",
+              "kind": "Net",
+              "addr": 2380120280336,
+              "type": "logic",
+              "netType": {
+                "name": "wire",
+                "kind": "NetType",
+                "addr": 2380117592960,
+                "type": "logic"
+              }
+            },
+            {
+              "name": "mem",
+              "kind": "Variable",
+              "addr": 2380120279352,
+              "type": "reg[7:0]$[0:255]",
+              "lifetime": "Static"
+            },
+            {
+              "name": "",
+              "kind": "ProceduralBlock",
+              "addr": 2380120279496,
+              "procedureKind": "Always",
+              "body": {
+                "kind": "Timed",
+                "timing": {
+                  "kind": "EventList",
+                  "events": [
+                    {
+                      "kind": "SignalEvent",
+                      "expr": {
+                        "kind": "NamedValue",
+                        "type": "logic[7:0]",
+                        "symbol": "2380120279856 address"
+                      },
+                      "edge": "None"
+                    },
+                    {
+                      "kind": "SignalEvent",
+                      "expr": {
+                        "kind": "NamedValue",
+                        "type": "logic[7:0]",
+                        "symbol": "2380120280024 data_in"
+                      },
+                      "edge": "None"
+                    },
+                    {
+                      "kind": "SignalEvent",
+                      "expr": {
+                        "kind": "NamedValue",
+                        "type": "logic",
+                        "symbol": "2380120280336 read_write"
+                      },
+                      "edge": "None"
+                    },
+                    {
+                      "kind": "SignalEvent",
+                      "expr": {
+                        "kind": "NamedValue",
+                        "type": "logic",
+                        "symbol": "2380120280504 chip_en"
+                      },
+                      "edge": "None"
+                    }
+                  ]
+                },
+                "stmt": {
+                  "kind": "Conditional",
+                  "conditions": [
+                    {
+                      "expr": {
+                        "kind": "BinaryOp",
+                        "type": "logic",
+                        "op": "LogicalAnd",
+                        "left": {
+                          "kind": "BinaryOp",
+                          "type": "logic",
+                          "op": "Equality",
+                          "left": {
+                            "kind": "Conversion",
+                            "type": "logic[31:0]",
+                            "operand": {
+                              "kind": "NamedValue",
+                              "type": "logic",
+                              "symbol": "2380120280336 read_write"
+                            }
+                          },
+                          "right": {
+                            "kind": "Conversion",
+                            "type": "logic[31:0]",
+                            "operand": {
+                              "kind": "IntegerLiteral",
+                              "type": "int",
+                              "value": "1",
+                              "constant": "1"
+                            },
+                            "constant": "32'd1"
+                          }
+                        },
+                        "right": {
+                          "kind": "BinaryOp",
+                          "type": "logic",
+                          "op": "Equality",
+                          "left": {
+                            "kind": "Conversion",
+                            "type": "logic[31:0]",
+                            "operand": {
+                              "kind": "NamedValue",
+                              "type": "logic",
+                              "symbol": "2380120280504 chip_en"
+                            }
+                          },
+                          "right": {
+                            "kind": "Conversion",
+                            "type": "logic[31:0]",
+                            "operand": {
+                              "kind": "IntegerLiteral",
+                              "type": "int",
+                              "value": "1",
+                              "constant": "1"
+                            },
+                            "constant": "32'd1"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "check": "None",
+                  "ifTrue": {
+                    "kind": "Block",
+                    "blockKind": "Sequential",
+                    "body": {
+                      "kind": "ExpressionStatement",
+                      "expr": {
+                        "kind": "Assignment",
+                        "type": "reg[7:0]",
+                        "left": {
+                          "kind": "ElementSelect",
+                          "type": "reg[7:0]",
+                          "value": {
+                            "kind": "NamedValue",
+                            "type": "reg[7:0]$[0:255]",
+                            "symbol": "2380120279352 mem"
+                          },
+                          "selector": {
+                            "kind": "NamedValue",
+                            "type": "logic[7:0]",
+                            "symbol": "2380120279856 address"
+                          }
+                        },
+                        "right": {
+                          "kind": "NamedValue",
+                          "type": "logic[7:0]",
+                          "symbol": "2380120280024 data_in"
+                        },
+                        "isNonBlocking": false
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "",
+              "kind": "ProceduralBlock",
+              "addr": 2380120279608,
+              "procedureKind": "Always",
+              "body": {
+                "kind": "Timed",
+                "timing": {
+                  "kind": "EventList",
+                  "events": [
+                    {
+                      "kind": "SignalEvent",
+                      "expr": {
+                        "kind": "NamedValue",
+                        "type": "logic",
+                        "symbol": "2380120280336 read_write"
+                      },
+                      "edge": "None"
+                    },
+                    {
+                      "kind": "SignalEvent",
+                      "expr": {
+                        "kind": "NamedValue",
+                        "type": "logic",
+                        "symbol": "2380120280504 chip_en"
+                      },
+                      "edge": "None"
+                    },
+                    {
+                      "kind": "SignalEvent",
+                      "expr": {
+                        "kind": "NamedValue",
+                        "type": "logic[7:0]",
+                        "symbol": "2380120279856 address"
+                      },
+                      "edge": "None"
+                    }
+                  ]
+                },
+                "stmt": {
+                  "kind": "Conditional",
+                  "conditions": [
+                    {
+                      "expr": {
+                        "kind": "BinaryOp",
+                        "type": "logic",
+                        "op": "LogicalAnd",
+                        "left": {
+                          "kind": "BinaryOp",
+                          "type": "logic",
+                          "op": "Equality",
+                          "left": {
+                            "kind": "Conversion",
+                            "type": "logic[31:0]",
+                            "operand": {
+                              "kind": "NamedValue",
+                              "type": "logic",
+                              "symbol": "2380120280336 read_write"
+                            }
+                          },
+                          "right": {
+                            "kind": "Conversion",
+                            "type": "logic[31:0]",
+                            "operand": {
+                              "kind": "IntegerLiteral",
+                              "type": "int",
+                              "value": "0",
+                              "constant": "0"
+                            },
+                            "constant": "32'd0"
+                          }
+                        },
+                        "right": {
+                          "kind": "NamedValue",
+                          "type": "logic",
+                          "symbol": "2380120280504 chip_en"
+                        }
+                      }
+                    }
+                  ],
+                  "check": "None",
+                  "ifTrue": {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "Assignment",
+                      "type": "reg[7:0]",
+                      "left": {
+                        "kind": "NamedValue",
+                        "type": "reg[7:0]",
+                        "symbol": "2380120280192 data_out"
+                      },
+                      "right": {
+                        "kind": "ElementSelect",
+                        "type": "reg[7:0]",
+                        "value": {
+                          "kind": "NamedValue",
+                          "type": "reg[7:0]$[0:255]",
+                          "symbol": "2380120279352 mem"
+                        },
+                        "selector": {
+                          "kind": "NamedValue",
+                          "type": "logic[7:0]",
+                          "symbol": "2380120279856 address"
+                        }
+                      },
+                      "isNonBlocking": false
+                    }
+                  },
+                  "ifFalse": {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "Assignment",
+                      "type": "reg[7:0]",
+                      "left": {
+                        "kind": "NamedValue",
+                        "type": "reg[7:0]",
+                        "symbol": "2380120280192 data_out"
+                      },
+                      "right": {
+                        "kind": "Conversion",
+                        "type": "reg[7:0]",
+                        "operand": {
+                          "kind": "Conversion",
+                          "type": "logic signed[31:0]",
+                          "operand": {
+                            "kind": "IntegerLiteral",
+                            "type": "int",
+                            "value": "0",
+                            "constant": "0"
+                          },
+                          "constant": "0"
+                        },
+                        "constant": "8'd0"
+                      },
+                      "isNonBlocking": false
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "definition": "2380117860864 memory"
+        },
+        "connections": [
+        ]
+      }
+    ]
+  },
+  "definitions": [
+    {
+      "name": "memory",
+      "kind": "Definition",
+      "addr": 2380117860864,
+      "defaultNetType": "2380117592960 wire",
+      "definitionKind": "Module",
+      "defaultLifetime": "Static",
+      "unconnectedDrive": "None",
+      "cellDefine": false
+    }
+  ]
+}
