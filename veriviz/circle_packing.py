@@ -6,32 +6,34 @@ class ModuleFinder:
     """Visitor that finds all module instances in a design. Inspired by slang-hier."""
 
     def __init__(self):
-        self.modules = {}
-
-        self.parent_module = self.modules
-        self.depth = 0
+        # traversal variables
+        self.stack = []
+        self.root = None
 
     def __call__(self, node):
+        # Two other methods:
+        # 1. Call Slang methods to find parent
+        # 2. Only keep track of parent instead of stack
         if isinstance(node, pyslang.InstanceSymbol):
             if node.isModule:
-                current_module = {}
-                current_module["name"] = node.definition.name
-
-                self.parent_module["children"].append(current_module)
-                self.current_depth += 1
-                for member in node.body:
-                    member.visit(self)
+                current = {"name": f"{node.definition.name} ({node.name})", 'children': []}
+                if self.stack:
+                    self.stack[-1]["children"].append(current)
                 else:
-                    current_module["value"] = 1
+                    self.root = current
+                self.stack.append(current)
 
-                self.current_depth -= 1
+                node.body.visit(self)
+                self.stack.pop()
+                if not current["children"]: # leaf node
+                    del current["children"]
+                    current["value"] = 1
 
                 return pyslang.VisitAction.Skip
-        return pyslang.VisitAction.Advance
 
     def dump(self):
         with open("data.json", "wb") as f:
-            f.write(msgspec.json.encode(self.modules))
+            f.write(msgspec.json.encode(self.root))
 
 
 source_manager = pyslang.SyntaxTree.getDefaultSourceManager()
@@ -59,5 +61,5 @@ top = root.topInstances[0]
 visitor = ModuleFinder()
 top.visit(visitor)
 
-for mod in visitor.modules:
-    print(mod.name, mod.definition.name)
+visitor.dump()
+
