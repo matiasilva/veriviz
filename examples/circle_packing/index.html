@@ -38,94 +38,83 @@
       d3.json("data.json")
         .then((data) => {
           const width = 928;
-          const height = 600;
-          const scale = 1;
-          const root = d3.hierarchy(data);
-          const links = root.links();
-          const nodes = root.descendants();
+          const height = width;
+          const margin = 1; // to avoid clipping the root circle stroke
 
-          const simulation = d3
-            .forceSimulation(nodes)
-            .force(
-              "link",
-              d3
-                .forceLink(links)
-                .id((d) => d.id)
-                .distance(scale - 1)
-                .strength(1),
-            )
-            .force("charge", d3.forceManyBody().strength(-50))
-            .force("x", d3.forceX())
-            .force("y", d3.forceY());
+          const format = d3.format(",d");
 
-          // Create the container SVG.
+          const pack = d3
+            .pack()
+            .size([width - margin * 2, height - margin * 2])
+            .padding(3);
+
+          const root = pack(
+            d3
+              .hierarchy(data)
+              .sum((d) => d.value)
+              .sort((a, b) => b.value - a.value),
+          );
+
           const svg = d3
             .create("svg")
             .attr("width", width)
             .attr("height", height)
-            .attr("viewBox", [-width / 2, -height / 2, width, height])
-            .attr("style", "max-width: 100%; height: auto;");
+            .attr("viewBox", [-margin, -margin, width, height])
+            .attr("style", "width: 100%; height: auto; font: 10px sans-serif;")
+            .attr("text-anchor", "middle");
 
-          // Append links.
-          const link = svg
-            .append("g")
-            .attr("stroke", "#999")
-            .attr("stroke-opacity", 0.6)
-            .selectAll("line")
-            .data(links)
-            .join("line");
-
-          function drag(simulation) {
-            function dragstarted(event, d) {
-              if (!event.active) simulation.alphaTarget(0.3).restart();
-              d.fx = d.x;
-              d.fy = d.y;
-            }
-
-            function dragged(event, d) {
-              d.fx = event.x;
-              d.fy = event.y;
-            }
-
-            function dragended(event, d) {
-              if (!event.active) simulation.alphaTarget(0);
-              d.fx = null;
-              d.fy = null;
-            }
-
-            return d3
-              .drag()
-              .on("start", dragstarted)
-              .on("drag", dragged)
-              .on("end", dragended);
-          }
-
-          // Append nodes.
           const node = svg
             .append("g")
-            .attr("fill", "#fff")
-            .attr("stroke", "#000")
-            .attr("stroke-width", 1.5)
-            .selectAll("circle")
-            .data(nodes)
-            .join("circle")
-            .attr("fill", (d) => (d.children ? null : "#000"))
-            .attr("stroke", (d) => (d.children ? null : "#fff"))
-            .attr("r", 3.5 * scale)
-            .call(drag(simulation));
+            .selectAll()
+            .data(root.descendants())
+            .join("g")
+            .attr("transform", (d) => `translate(${d.x},${d.y})`);
 
-          node.append("title").text((d) => d.data.name);
+          node.append("title").text(
+            (d) =>
+              `${d
+                .ancestors()
+                .map((d) => d.data.name)
+                .reverse()
+                .join("/")}\n${format(d.value)}`,
+          );
 
-          simulation.on("tick", () => {
-            link
-              .attr("x1", (d) => d.source.x)
-              .attr("y1", (d) => d.source.y)
-              .attr("x2", (d) => d.target.x)
-              .attr("y2", (d) => d.target.y);
+          node
+            .append("circle")
+            .attr("fill", (d) =>
+              d.children
+                ? "#fff"
+                : d3.interpolateOranges(0.2 + 0.8 * d.intensity),
+            )
+            .attr("stroke", (d) => (d.children ? "#bbb" : null))
+            .attr("r", (d) => d.r);
 
-            node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
-          });
+          // Add a label to leaf nodes.
+          const text = node
+            .filter((d) => !d.children && d.r > 10)
+            .append("text")
+            .attr("clip-path", (d) => `circle(${d.r})`);
 
+          // Add a tspan for each CamelCase-separated word.
+          text
+            .selectAll()
+            .data((d) => d.data.name.split(/(?=[A-Z][a-z])|\s+/g))
+            .join("tspan")
+            .attr("x", 0)
+            .attr("y", (d, i, nodes) => `${i - nodes.length / 2 + 0.35}em`)
+            .text((d) => d);
+
+          // Add a tspan for the node’s value.
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr(
+              "y",
+              (d) =>
+                `${d.data.name.split(/(?=[A-Z][a-z])|\s+/g).length / 2 + 0.35}em`,
+            )
+            .attr("fill-opacity", 0.7)
+            .text((d) => format(d.value));
           // invalidation.then(() => simulation.stop());
           container.append(svg.node());
         })
