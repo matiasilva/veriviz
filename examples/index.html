@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VeriViz - Visualization Examples</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+          Cantarell, "Helvetica Neue", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 60px;
+        color: white;
+      }
+
+      h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+
+      .examples-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .example-card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .example-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .example-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        text-transform: capitalize;
+      }
+
+      .example-description {
+        color: #666;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .datasets {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .dataset-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 5px;
+      }
+
+      .dataset-links {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .dataset-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: opacity 0.2s, transform 0.2s;
+        font-size: 0.9rem;
+      }
+
+      .dataset-link:hover {
+        opacity: 0.9;
+        transform: scale(1.05);
+      }
+
+      .dataset-link.basic {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      }
+
+      .dataset-link.intermediate {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+
+      .dataset-link.advanced {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      }
+
+      footer {
+        text-align: center;
+        color: white;
+        margin-top: 60px;
+        opacity: 0.8;
+      }
+
+      footer a {
+        color: white;
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .subtitle {
+          font-size: 1rem;
+        }
+
+        .examples-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>VeriViz</h1>
+        <p class="subtitle">Interactive D3.js Visualization Examples</p>
+      </header>
+
+      <div class="examples-grid">
+        <div class="example-card">
+          <h2 class="example-title">Circle Packing</h2>
+          <p class="example-description">
+            Hierarchical circle packing visualization showing nested data
+            structures with size and intensity encoding. Great for displaying
+            complex hierarchical relationships.
+          </p>
+          <div class="datasets">
+            <div class="dataset-label">Available Datasets:</div>
+            <div class="dataset-links">
+              <a
+                href="circle_packing/index.html?file=top_basic.json"
+                class="dataset-link basic"
+                >Basic</a
+              >
+              <a
+                href="circle_packing/index.html?file=top_intermediate.json"
+                class="dataset-link intermediate"
+                >Intermediate</a
+              >
+              <a
+                href="circle_packing/index.html?file=top_advanced.json"
+                class="dataset-link advanced"
+                >Advanced</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="example-card">
+          <h2 class="example-title">Force Tree</h2>
+          <p class="example-description">
+            Force-directed graph layout that simulates physical forces to
+            position nodes. Perfect for visualizing network relationships and
+            connections.
+          </p>
+          <div class="datasets">
+            <div class="dataset-label">Available Datasets:</div>
+            <div class="dataset-links">
+              <a
+                href="force_tree/index.html?file=data.json"
+                class="dataset-link basic"
+                >Default</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>
+          Built with <a href="https://d3js.org/" target="_blank">D3.js</a> |
+          <a
+            href="https://github.com/anthropics/veriviz"
+            target="_blank"
+            >View on GitHub</a
+          >
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

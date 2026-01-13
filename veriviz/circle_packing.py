@@ -1,5 +1,7 @@
+#!/usr/bin/env python3
 import pyslang
 import msgspec
+from pathlib import Path
 
 # NetSymbol
 # VariableSymbol
@@ -7,6 +9,7 @@ import msgspec
 # FieldSymbol
 
 MAX_DEPTH = 6
+DATA_OUTPATH = Path("../examples/circle_packing/")
 
 
 class ModuleFinder:
@@ -44,8 +47,9 @@ class ModuleFinder:
 
                 return pyslang.VisitAction.Skip
 
-    def dump(self):
-        with open("data.json", "wb") as f:
+    def dump(self, outfile: str):
+        outpath = DATA_OUTPATH / f"{outfile}.json"
+        with open(outpath, "wb") as f:
             f.write(msgspec.json.encode(self.root))
 
 
@@ -58,24 +62,24 @@ class Counter:
         self.total_count += 1
         if isinstance(node, (pyslang.NetSymbol, pyslang.VariableSymbol)):
             if node.kind == pyslang.SymbolKind.PackedStructType:
-                __import__("pdb").set_trace()
+                pass  # FIXME
             self.signal_count += 1
 
 
 source_manager = pyslang.SyntaxTree.getDefaultSourceManager()
 loader = pyslang.SourceLoader(source_manager)
 
-loader.addFiles("../hdl/components/*.sv")
-loader.addFiles("../hdl/example2_top.sv")
+loader.addFiles("../hdl/basic/*.sv")
+loader.addFiles("../hdl/intermediate/*.sv")
+loader.addFiles("../hdl/advanced/*.sv")
 
 # loader.addSearchDirectories("include/")
 # loader.addSearchExtension(".svh")
 
 comp_options = pyslang.CompilationOptions()
-comp_options.topModules = {"example2_top"}
+# comp_options.topModules = {"example2_top"}
 
 bag = pyslang.Bag([comp_options])
-print(comp_options.topModules)
 
 trees = loader.loadAndParseSources(bag)
 
@@ -84,23 +88,21 @@ for tree in trees:
     comp.addSyntaxTree(tree)
 
 root = comp.getRoot()
-print(root.topInstances)
-top = root.topInstances[0]
-visitor = ModuleFinder()
-top.visit(visitor)
+for instance in root.topInstances:
+    visitor = ModuleFinder()
+    instance.visit(visitor)
 
-leaf_nodes = {k: v for k, v in visitor.node_map.items() if "children" not in v}
+    leaf_nodes = {k: v for k, v in visitor.node_map.items() if "children" not in v}
 
-max_signal_count = 0
-for node, data in leaf_nodes.items():
-    counter = Counter()
-    node.visit(counter)
-    data["value"] = counter.total_count
-    data["intensity"] = counter.signal_count
-    if counter.signal_count > max_signal_count:
-        max_signal_count = counter.signal_count
-for data in leaf_nodes.values():
-    print(max_signal_count, data["intensity"])
-    data["intensity"] /= max_signal_count
+    max_signal_count = 0
+    for node, data in leaf_nodes.items():
+        counter = Counter()
+        node.visit(counter)
+        data["value"] = counter.total_count
+        data["intensity"] = counter.signal_count
+        if counter.signal_count > max_signal_count:
+            max_signal_count = counter.signal_count
+    for data in leaf_nodes.values():
+        data["intensity"] /= max_signal_count
 
-visitor.dump()
+    visitor.dump(instance.definition.name)

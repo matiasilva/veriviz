@@ -35,7 +35,11 @@
     <script type="module">
       import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
-      d3.json("data.json")
+      // Get JSON file from URL query parameter, default to "data.json"
+      const urlParams = new URLSearchParams(window.location.search);
+      const jsonFile = urlParams.get("file") || "data.json";
+
+      d3.json(jsonFile)
         .then((data) => {
           const width = 928;
           const height = width;
@@ -84,7 +88,7 @@
             .attr("fill", (d) =>
               d.children
                 ? "#fff"
-                : d3.interpolateOranges(0.2 + 0.8 * d.intensity),
+                : d3.interpolateOranges(0.2 + 0.8 * d.data.intensity),
             )
             .attr("stroke", (d) => (d.children ? "#bbb" : null))
             .attr("r", (d) => d.r);
