@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VeriViz - Visualization Examples</title>
+    <title>VeriViz - Chip Design Visualization</title>
     <style>
       * {
         margin: 0;
@@ -15,139 +15,126 @@
         font-family:
           -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
           Cantarell, "Helvetica Neue", sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #fafafa;
         min-height: 100vh;
         padding: 40px 20px;
+        color: #333;
       }
 
       .container {
-        max-width: 1200px;
+        max-width: 900px;
         margin: 0 auto;
       }
 
       header {
-        text-align: center;
-        margin-bottom: 60px;
-        color: white;
+        margin-bottom: 48px;
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 24px;
       }
 
       h1 {
-        font-size: 3rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 1.75rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #111;
       }
 
       .subtitle {
-        font-size: 1.2rem;
-        opacity: 0.9;
+        font-size: 0.95rem;
+        color: #666;
       }
 
       .examples-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 30px;
-        margin-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
       }
 
       .example-card {
         background: white;
-        border-radius: 12px;
-        padding: 30px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-
-      .example-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        border: 1px solid #e5e5e5;
+        border-radius: 6px;
+        padding: 24px;
       }
 
       .example-title {
-        font-size: 1.8rem;
+        font-size: 1.1rem;
         font-weight: 600;
-        color: #333;
-        margin-bottom: 10px;
-        text-transform: capitalize;
+        color: #111;
+        margin-bottom: 8px;
       }
 
       .example-description {
-        color: #666;
-        margin-bottom: 20px;
-        line-height: 1.6;
-      }
-
-      .datasets {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+        color: #555;
+        margin-bottom: 16px;
+        line-height: 1.5;
+        font-size: 0.9rem;
       }
 
       .dataset-label {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #555;
-        margin-bottom: 5px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #888;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
 
       .dataset-links {
         display: flex;
-        gap: 10px;
+        gap: 8px;
         flex-wrap: wrap;
       }
 
       .dataset-link {
         display: inline-block;
-        padding: 10px 20px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 8px 16px;
+        background: #2563eb;
         color: white;
         text-decoration: none;
-        border-radius: 6px;
+        border-radius: 4px;
         font-weight: 500;
-        transition: opacity 0.2s, transform 0.2s;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        transition: background 0.15s;
       }
 
       .dataset-link:hover {
-        opacity: 0.9;
-        transform: scale(1.05);
+        background: #1d4ed8;
       }
 
-      .dataset-link.basic {
-        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      .dataset-link.secondary {
+        background: #f3f4f6;
+        color: #374151;
       }
 
-      .dataset-link.intermediate {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      }
-
-      .dataset-link.advanced {
-        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      .dataset-link.secondary:hover {
+        background: #e5e7eb;
       }
 
       footer {
-        text-align: center;
-        color: white;
-        margin-top: 60px;
-        opacity: 0.8;
+        margin-top: 48px;
+        padding-top: 24px;
+        border-top: 1px solid #e5e5e5;
+        font-size: 0.85rem;
+        color: #888;
       }
 
       footer a {
-        color: white;
+        color: #2563eb;
+        text-decoration: none;
+      }
+
+      footer a:hover {
         text-decoration: underline;
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 600px) {
+        body {
+          padding: 24px 16px;
+        }
+
         h1 {
-          font-size: 2rem;
-        }
-
-        .subtitle {
-          font-size: 1rem;
-        }
-
-        .examples-grid {
-          grid-template-columns: 1fr;
+          font-size: 1.5rem;
         }
       }
     </style>
@@ -156,67 +143,66 @@
     <div class="container">
       <header>
         <h1>VeriViz</h1>
-        <p class="subtitle">Interactive D3.js Visualization Examples</p>
+        <p class="subtitle">
+          Interactive data visualization about chip designs
+        </p>
       </header>
 
       <div class="examples-grid">
         <div class="example-card">
           <h2 class="example-title">Circle Packing</h2>
-          <p class="example-description">
-            Hierarchical circle packing visualization showing nested data
-            structures with size and intensity encoding. Great for displaying
-            complex hierarchical relationships.
-          </p>
-          <div class="datasets">
-            <div class="dataset-label">Available Datasets:</div>
-            <div class="dataset-links">
-              <a
-                href="circle_packing/index.html?file=top_basic.json"
-                class="dataset-link basic"
-                >Basic</a
-              >
-              <a
-                href="circle_packing/index.html?file=top_intermediate.json"
-                class="dataset-link intermediate"
-                >Intermediate</a
-              >
-              <a
-                href="circle_packing/index.html?file=top_advanced.json"
-                class="dataset-link advanced"
-                >Advanced</a
-              >
-            </div>
+          <!-- <p class="example-description"> -->
+          <!--   Hierarchical circle packing visualization showing nested module -->
+          <!--   structures with size and intensity encoding. -->
+          <!-- </p> -->
+          <div class="dataset-label">Datasets</div>
+          <div class="dataset-links">
+            <a
+              href="circle_packing/index.html?file=top_basic.json"
+              class="dataset-link"
+              >Basic</a
+            >
+            <a
+              href="circle_packing/index.html?file=top_intermediate.json"
+              class="dataset-link secondary"
+              >Intermediate</a
+            >
+            <a
+              href="circle_packing/index.html?file=top_advanced.json"
+              class="dataset-link secondary"
+              >Advanced</a
+            >
           </div>
         </div>
 
         <div class="example-card">
           <h2 class="example-title">Force Tree</h2>
-          <p class="example-description">
-            Force-directed graph layout that simulates physical forces to
-            position nodes. Perfect for visualizing network relationships and
-            connections.
-          </p>
-          <div class="datasets">
-            <div class="dataset-label">Available Datasets:</div>
-            <div class="dataset-links">
-              <a
-                href="force_tree/index.html?file=data.json"
-                class="dataset-link basic"
-                >Default</a
-              >
-            </div>
+          <p class="example-description">Nodes are draggable!</p>
+          <div class="dataset-label">Datasets</div>
+          <div class="dataset-links">
+            <a
+              href="force_tree/index.html?file=../circle_packing/top_basic.json"
+              class="dataset-link"
+              >Basic</a
+            >
+            <a
+              href="force_tree/index.html?file=../circle_packing/top_intermediate.json"
+              class="dataset-link secondary"
+              >Intermediate</a
+            >
+            <a
+              href="force_tree/index.html?file=../circle_packing/top_advanced.json"
+              class="dataset-link secondary"
+              >Advanced</a
+            >
           </div>
         </div>
       </div>
 
       <footer>
         <p>
-          Built with <a href="https://d3js.org/" target="_blank">D3.js</a> |
-          <a
-            href="https://github.com/anthropics/veriviz"
-            target="_blank"
-            >View on GitHub</a
-          >
+          Built with <a href="https://d3js.org/" target="_blank">D3.js</a> and
+          <a href="https://sv-lang.com/" target="_blank">slang</a>
         </p>
       </footer>
     </div>
