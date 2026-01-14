@@ -42,7 +42,7 @@
       d3.json(jsonFile)
         .then((data) => {
           const width = 928;
-          const height = 600;
+          const height = width;
           const scale = 1;
           const root = d3.hierarchy(data);
           const links = root.links();
