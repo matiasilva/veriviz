@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import pyslang
 import msgspec
 from pathlib import Path

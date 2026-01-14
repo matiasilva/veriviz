@@ -109,7 +109,9 @@
             .selectAll("circle")
             .data(nodes)
             .join("circle")
-            .attr("fill", (d) => (d.children ? null : "#000"))
+            .attr("fill", (d) =>
+              d.depth == 0 ? "#ff0000" : d.children ? null : "#000",
+            )
             .attr("stroke", (d) => (d.children ? null : "#fff"))
             .attr("r", 3.5 * scale)
             .call(drag(simulation));
