@@ -2,7 +2,7 @@ import pyslang
 import msgspec
 from pathlib import Path
 
-DATA_OUTPATH = Path("../examples/force_tree/")
+DATA_OUTPATH = Path("examples/force_tree/")
 
 
 class ModuleFinder:
@@ -43,9 +43,9 @@ class ModuleFinder:
 source_manager = pyslang.SyntaxTree.getDefaultSourceManager()
 loader = pyslang.SourceLoader(source_manager)
 
-loader.addFiles("../hdl/basic/*.sv")
-loader.addFiles("../hdl/intermediate/*.sv")
-loader.addFiles("../hdl/advanced/*.sv")
+loader.addFiles("hdl/basic/*.sv")
+loader.addFiles("hdl/intermediate/*.sv")
+loader.addFiles("hdl/advanced/*.sv")
 
 # loader.addSearchDirectories("include/")
 # loader.addSearchExtension(".svh")

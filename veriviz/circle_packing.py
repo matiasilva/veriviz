@@ -8,7 +8,7 @@ from pathlib import Path
 # FieldSymbol
 
 MAX_DEPTH = 6
-DATA_OUTPATH = Path("../examples/circle_packing/")
+DATA_OUTPATH = Path("examples/circle_packing/")
 
 
 class ModuleFinder:
@@ -68,9 +68,9 @@ class Counter:
 source_manager = pyslang.SyntaxTree.getDefaultSourceManager()
 loader = pyslang.SourceLoader(source_manager)
 
-loader.addFiles("../hdl/basic/*.sv")
-loader.addFiles("../hdl/intermediate/*.sv")
-loader.addFiles("../hdl/advanced/*.sv")
+loader.addFiles("hdl/basic/*.sv")
+loader.addFiles("hdl/intermediate/*.sv")
+loader.addFiles("hdl/advanced/*.sv")
 
 # loader.addSearchDirectories("include/")
 # loader.addSearchExtension(".svh")
@@ -85,6 +85,16 @@ trees = loader.loadAndParseSources(bag)
 comp = pyslang.Compilation(bag)
 for tree in trees:
     comp.addSyntaxTree(tree)
+
+
+diagnostics = comp.getAllDiagnostics()
+if diagnostics:
+    error_messages = []
+    for diag in diagnostics:
+        if diag.isError():
+            error_messages.append(str(diag))
+    if error_messages:
+        raise Exception(f"Compilation errors: {'; '.join(error_messages)}")
 
 root = comp.getRoot()
 for instance in root.topInstances:
